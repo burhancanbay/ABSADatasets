@@ -396,6 +396,8 @@
         );
       })();
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
     <script>
       /*
         to-do: change to Vue reusable component
@@ -764,19 +766,20 @@
                     item.sentiment = e.target.id;
 
                     debugger;
-                    let data = PageArrays;
-                    let index = tkspanid.split("_")[0].replace("R", "");
+                    const data = PageArrays;
+                    const index = tkspanid.split("_")[0].replace("R", "");
 
-                    let tweetId = window.tweetIds[index - 1];
+                    const tweet_id = window.tweetIds[index - 1];
 
-                    console.log("test");
-                    // axios yazılcak
+                    const tweet_text = this.RawABSAData[index - 1];
+
+                    insertTweet(tweet_id, tweet_text, data);
                   }
                 });
               });
             }
           },
-          ProcessCSV: function (rs) {
+          ProcessCSV: async function (rs) {
             this.MaxPage = Math.ceil(rs.data.length / 100);
             this.MaxPagina = Math.ceil(rs.data.length / 1000);
             console["info"]("Parse complete");
@@ -787,250 +790,32 @@
             } else {
               console["info"]("     Errors:", rs.errors.length);
               this.DataReady = true;
-              this.RawABSAData = Object.freeze(_.flattenDeep(rs.data));
-
-              //elasticden
-              this.RawABSAData = [
-                "makyuz deneme",
-                "bcanbay deneme2",
-                "24 numaralı tweet text",
-                "ali ata baktı ama at aliye tekme attı sonra ne olacakti ki hayat insana darbe vurur",
-                "makyuz deneme",
-                "bcanbay deneme2",
-                "24 numaralı tweet text",
-                "ali ata baktı ama at aliye tekme attı sonra ne olacakti ki hayat insana darbe vurur",
-                "makyuz deneme",
-                "bcanbay deneme2",
-                "24 numaralı tweet text",
-                "ali ata baktı ama at aliye tekme attı sonra ne olacakti ki hayat insana darbe vurur",
-                "makyuz deneme",
-                "bcanbay deneme2",
-                "24 numaralı tweet text",
-                "ali ata baktı ama at aliye tekme attı sonra ne olacakti ki hayat insana darbe vurur",
-                "makyuz deneme",
-                "bcanbay deneme2",
-                "24 numaralı tweet text",
-                "ali ata baktı ama at aliye tekme attı sonra ne olacakti ki hayat insana darbe vurur",
-                "makyuz deneme",
-                "bcanbay deneme2",
-                "24 numaralı tweet text",
-                "ali ata baktı ama at aliye tekme attı sonra ne olacakti ki hayat insana darbe vurur",
-                "makyuz deneme",
-                "bcanbay deneme2",
-                "24 numaralı tweet text",
-                "ali ata baktı ama at aliye tekme attı sonra ne olacakti ki hayat insana darbe vurur",
-                "makyuz deneme",
-                "bcanbay deneme2",
-                "24 numaralı tweet text",
-                "ali ata baktı ama at aliye tekme attı sonra ne olacakti ki hayat insana darbe vurur",
-                "makyuz deneme",
-                "bcanbay deneme2",
-                "24 numaralı tweet text",
-                "ali ata baktı ama at aliye tekme attı sonra ne olacakti ki hayat insana darbe vurur",
-                "makyuz deneme",
-                "bcanbay deneme2",
-                "24 numaralı tweet text",
-                "ali ata baktı ama at aliye tekme attı sonra ne olacakti ki hayat insana darbe vurur",
-                "makyuz deneme",
-                "bcanbay deneme2",
-                "24 numaralı tweet text",
-                "ali ata baktı ama at aliye tekme attı sonra ne olacakti ki hayat insana darbe vurur",
-                "makyuz deneme",
-                "bcanbay deneme2",
-                "24 numaralı tweet text",
-                "ali ata baktı ama at aliye tekme attı sonra ne olacakti ki hayat insana darbe vurur",
-                "makyuz deneme",
-                "bcanbay deneme2",
-                "24 numaralı tweet text",
-                "ali ata baktı ama at aliye tekme attı sonra ne olacakti ki hayat insana darbe vurur",
-                "makyuz deneme",
-                "bcanbay deneme2",
-                "24 numaralı tweet text",
-                "ali ata baktı ama at aliye tekme attı sonra ne olacakti ki hayat insana darbe vurur",
-                "makyuz deneme",
-                "bcanbay deneme2",
-                "24 numaralı tweet text",
-                "ali ata baktı ama at aliye tekme attı sonra ne olacakti ki hayat insana darbe vurur",
-                "makyuz deneme",
-                "bcanbay deneme2",
-                "24 numaralı tweet text",
-                "ali ata baktı ama at aliye tekme attı sonra ne olacakti ki hayat insana darbe vurur",
-                "makyuz deneme",
-                "bcanbay deneme2",
-                "24 numaralı tweet text",
-                "ali ata baktı ama at aliye tekme attı sonra ne olacakti ki hayat insana darbe vurur",
-                "makyuz deneme",
-                "bcanbay deneme2",
-                "24 numaralı tweet text",
-                "ali ata baktı ama at aliye tekme attı sonra ne olacakti ki hayat insana darbe vurur",
-                "makyuz deneme",
-                "bcanbay deneme2",
-                "24 numaralı tweet text",
-                "ali ata baktı ama at aliye tekme attı sonra ne olacakti ki hayat insana darbe vurur",
-                "makyuz deneme",
-                "bcanbay deneme2",
-                "24 numaralı tweet text",
-                "ali ata baktı ama at aliye tekme attı sonra ne olacakti ki hayat insana darbe vurur",
-                "makyuz deneme",
-                "bcanbay deneme2",
-                "24 numaralı tweet text",
-                "ali ata baktı ama at aliye tekme attı sonra ne olacakti ki hayat insana darbe vurur",
-                "makyuz deneme",
-                "bcanbay deneme2",
-                "24 numaralı tweet text",
-                "ali ata baktı ama at aliye tekme attı sonra ne olacakti ki hayat insana darbe vurur",
-                "makyuz deneme",
-                "bcanbay deneme2",
-                "24 numaralı tweet text",
-                "ali ata baktı ama at aliye tekme attı sonra ne olacakti ki hayat insana darbe vurur",
-                "makyuz deneme",
-                "bcanbay deneme2",
-                "24 numaralı tweet text",
-                "ali ata baktı ama at aliye tekme attı sonra ne olacakti ki hayat insana darbe vurur",
-                "makyuz deneme",
-                "bcanbay deneme2",
-                "24 numaralı tweet text",
-                "ali ata baktı ama at aliye tekme attı sonra ne olacakti ki hayat insana darbe vurur",
-                "makyuz deneme",
-                "bcanbay deneme2",
-                "24 numaralı tweet text",
-                "ali ata baktı ama at aliye tekme attı sonra ne olacakti ki hayat insana darbe vurur",
-              ];
-              window.tweetIds = [
-                1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
-                19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34,
-                35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
-                51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66,
-                67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82,
-                83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98,
-                99, 100, 101, 102, 103, 104, 105,
-              ];
-
-              // postgress
-              let recomm = {
-                1: [
-                  {
-                    tkid: "R1_0",
-                    tk: "makyuz",
-                    aspect: true,
-                    sentiment: "Pos",
-                  },
-                  {
-                    tkid: "R1_1",
-                    tk: "deneme",
-                  },
-                ],
-                2: [
-                  {
-                    tkid: "R2_0",
-                    tk: "bcanbay",
-                  },
-                  {
-                    tkid: "R2_1",
-                    tk: "deneme2",
-                    aspect: true,
-                    sentiment: "Neg",
-                  },
-                ],
-                3: [
-                  {
-                    tkid: "R3_0",
-                    tk: "24",
-                  },
-                  {
-                    tkid: "R3_1",
-                    tk: "",
-                  },
-                  {
-                    tkid: "R3_2",
-                    tk: "",
-                  },
-                  {
-                    tkid: "R3_3",
-                    tk: "numaralı tweet text",
-                    aspect: true,
-                    sentiment: "Pos",
-                  },
-                ],
-                4: [
-                  {
-                    tkid: "R4_0",
-                    tk: "ali",
-                    aspect: true,
-                    sentiment: "Neu",
-                  },
-                  {
-                    tkid: "R4_1",
-                    tk: "ata",
-                    aspect: true,
-                    sentiment: "Neg",
-                  },
-                  {
-                    tkid: "R4_2",
-                    tk: "baktı",
-                    aspect: true,
-                    sentiment: "Pos",
-                  },
-                  {
-                    tkid: "R4_3",
-                    tk: "ama",
-                  },
-                  {
-                    tkid: "R4_4",
-                    tk: "at",
-                  },
-                  {
-                    tkid: "R4_5",
-                    tk: "aliye",
-                  },
-                  {
-                    tkid: "R4_6",
-                    tk: "tekme attı sonra",
-                    aspect: true,
-                    sentiment: "Pos",
-                  },
-                  {
-                    tkid: "R4_7",
-                    tk: "",
-                  },
-                  {
-                    tkid: "R4_8",
-                    tk: "",
-                  },
-                  {
-                    tkid: "R4_9",
-                    tk: "ne",
-                  },
-                  {
-                    tkid: "R4_10",
-                    tk: "olacakti",
-                  },
-                  {
-                    tkid: "R4_11",
-                    tk: "ki",
-                  },
-                  {
-                    tkid: "R4_12",
-                    tk: "hayat",
-                    aspect: true,
-                    sentiment: "Neg",
-                  },
-                  {
-                    tkid: "R4_13",
-                    tk: "insana",
-                  },
-                  {
-                    tkid: "R4_14",
-                    tk: "darbe",
-                  },
-                  {
-                    tkid: "R4_15",
-                    tk: "vurur",
-                  },
-                ],
-              };
+              this.RawABSAData = [];
 
               debugger;
+              let tweets = await getTweets();
+
+              debugger;
+              let recomm = await getRecoms();
+
+              window.tweetIds = [];
+
+              tweets.map((item) => {
+                const source = item._source;
+                this.RawABSAData.push(source.tweet_text);
+                window.tweetIds = [source.tweet_id];
+              });
+              let newItems = {};
+              recomm.map((item) => {
+                newItems[item.tweet_id] = item.json_field;
+              });
+
+              recomm = newItems;
+
+              console.log(tweets);
+              //elasticden
+
+              // postgress
 
               //PageNum is array of objects, key by index of Pagination, each Pagination contain 10 pages, each pages contain 100 rows of table
               this.PageNum = _.extend.apply(
@@ -1150,6 +935,7 @@
                         } else {
                           wtk.tkFinal = wtk.tk;
                         }
+                        axios;
                         return wtk;
                       })
                       .value();
@@ -1248,22 +1034,71 @@
         watch: {},
       });
     </script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
-      var config = {
-        method: "get",
-        url: "http://localhost:3000/opinions/add/123",
-        headers: {},
-      };
+      async function getTweets() {
+        var config = {
+          method: "get",
+          url: "http://localhost:7097/opinions/tweets",
+          headers: {
+            "content-type": "application/json",
+          },
+        };
 
-      axios(config)
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
+        return await new Promise((resolve, reject) => {
+          axios(config)
+            .then(function (response) {
+              return resolve(response.data || []);
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
         });
-    </script> -->
+      }
+
+      async function getRecoms() {
+        var config = {
+          method: "get",
+          url: "http://localhost:7097/opinions/user/makyuz",
+          headers: {
+            "content-type": "application/json",
+          },
+        };
+
+        return await new Promise((resolve, reject) => {
+          axios(config)
+            .then(function (response) {
+              return resolve(response.data || []);
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+        });
+      }
+
+      function insertTweet(tweet_id, tweet_text, json) {
+        var config = {
+          method: "put",
+          url: "http://localhost:7097/opinions/json",
+          headers: {
+            "content-type": "application/json",
+          },
+          data: {
+            tweet_id: tweet_id,
+            tweet_text: tweet_text,
+            user_name: "makyuz",
+            json_field: json,
+          },
+        };
+
+        axios(config)
+          .then(function (response) {
+            alert("başarılı");
+          })
+          .catch(function (error) {
+            alert("hata oluştu");
+          });
+      }
+    </script>
   </body>
 </html>
